@@ -3,6 +3,6 @@ Landing Page
 
 Underconstruction
 
-![English](https://en.zulma.id)
+[English](https://en.zulma.id)
 
-![Indonesia](https://id.zulma.id)
+[Indonesia](https://id.zulma.id)
