@@ -144,7 +144,7 @@
     
             <div class="row mb-4 shortener">
                 <div class="col-md-9 mb-2">
-                    <p class="url-input" id="message"></p>
+                    <input class="form-control url-input" name="text" type="url" value id="message" disabled>
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn-dark submit shorten" onclick="copyText()"><i class="fa fa-fw fa-copy"></i> Copy</button>
@@ -205,14 +205,14 @@
                         return response.json();
                     })
                     .then(function (data) {
-                        document.getElementById("message").innerHTML = data.shortURL
+                        document.getElementById("message").value = data.shortURL
                     })
                 document.getElementById("linkinput").value = '';
             }
 
             function copyText() {
                 /* Get the text field */
-                var copyText = document.getElementById("message").innerHTML;
+                var copyText = document.getElementById("message");
 
                 /* Select the text field */
                 copyText.select();
