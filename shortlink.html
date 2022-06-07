@@ -14,7 +14,7 @@
         <meta property="og:image" content=""/>
         <meta property="og:type" content="website"/>
         <meta property="og:url" content=""/>
-      
+    
         <!-- Default CSS -->
         <link rel="stylesheet" href="https://mineversal.com/assets/css/style.css">
         
@@ -32,8 +32,20 @@
         <link rel="shortcut icon" href="https://id.zulma.id/assets/images/favicon.ico"/>
         <link rel="apple-touch-icon" href="https://id.zulma.id/assets/images/logo.png">
         <title>Zulma's Landing Page</title>
-      
-        <!-- Style -->
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZTXR8R24Q"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-5ZTXR8R24Q');
+        </script>
+
         <style>
             body {
                 color: #fff;
@@ -79,36 +91,70 @@
                 color: #000;
                 background: #fff;
             }
-        </style>
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZTXR8R24Q"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-                dataLayer.push(arguments);
+            .shortener {
+                text-align: center;
+                width: 450px;
+                margin-left: auto;
+                margin-right: auto;
             }
-            gtag('js', new Date());
-
-            gtag('config', 'G-5ZTXR8R24Q');
-        </script>
+            .url-input {
+                width: 300px;
+            }
+            .shorten {
+                text-align: center;
+                width: 120px;
+            }
+            @media only screen and (max-width: 767px) {
+                .shortener {
+                    width: auto;
+                    text-align: center;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .url-input {
+                    text-align: center;
+                    width: auto;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .shorten {
+                    text-align: center;
+                    width: auto;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+        </style>
     </head>
     <body class="section-about font-monospace fs-5">
         <!-- Profile picture-->
         <img src="https://id.zulma.id/assets/images/logo.png" alt="profile picture" class="profile-picture mt-5">
 
         <!-- Profile name-->
-        <h3 class="profile-name mt-2">Azhar Rizki Zulma<br>X<br>Mineversal</h3>
-
+        <h3 class="profile-name mt-2">Zulma Shortlink</h3>
+        <section class="container">
+            <div class="row mb-4 shortener">
+                <div class="col-md-9 mb-2">
+                    <input class="form-control url-input" name="text" type="url" value id="linkinput" placeholder="Paste a URL to shorten">
+                </div>
+                <div class="col-md-3">
+                    <input class="btn btn-dark submit shorten" type="submit" id="myinput" value="Shorten">
+                </div>
+            </div>
+    
+            <div class="row mb-4 shortener">
+                <div class="col-md-9 mb-2">
+                    <p class="url-input" id="message"></p>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-dark submit shorten" onclick="copyText()"><i class="fa fa-fw fa-copy"></i> Copy</button>
+                </div>
+            </div>
+        </section>
+        
         <!-- Links-->
-        <a href="https://en.zulma.id/" class="links"><i class="fa fa-fw fa-user"></i> English</a>
-        <a href="https://id.zulma.id/" class="links"><i class="fa fa-fw fa-home"></i> Indonesia</a>
-        <a href="https://blog.zulma.id/" class="links"><i class="fa fa-fw fa-globe"></i> Blog</a>
-        <a href="https://s.zulma.id/Music" class="links"><i class="fa fa-fw fa-music"></i> Music</a>
-        <a href="/shortlink" class="links"><i class="fa fa-fw fa-link"></i> Shortlink</a>
-        <a href="https://mineversal.id/" class="links"><i class="fa fa-fw fa-folder"></i> Mineversal</a>
-      
+        <a href="https://zulma.id/" class="links mt-5"><i class="fa fa-fw fa-arrow-left"></i> Back</a>
+
         <!-- Footer -->
         <footer class="py-1 footer-style">
             <div class="section-footer container-fluid mt-5">
@@ -138,5 +184,46 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+            document.getElementById("myinput").onclick = function () {
+                var link = document.getElementById("linkinput").value;
+                var data = {
+                    "domain": "s.zulma.id",
+                    "originalURL": link,
+                    "allowDuplicates": false
+                };
+                fetch('https://api.short.cm/links/public', {
+                        method: 'post',
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'authorization': 'pk_8rS2KJdFpJFxlXGn'
+                        },
+                        body: JSON.stringify(data)
+                    }).then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        document.getElementById("message").innerHTML = data.shortURL
+                    })
+                document.getElementById("linkinput").value = '';
+            }
+
+            function copyText() {
+                /* Get the text field */
+                var copyText = document.getElementById("message");
+
+                /* Select the text field */
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+                /* Copy the text inside the text field */
+                navigator.clipboard.writeText(copyText.value);
+
+                /* Alert the copied text */
+                alert("Link Copied"); //+ copyText.value);
+            }
+        </script>
     </body>
 </html>
